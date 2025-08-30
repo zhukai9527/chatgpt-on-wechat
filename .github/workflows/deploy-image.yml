@@ -16,6 +16,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  DOCKERHUB_IMAGE_NAME: zack2025/chatgpt-on-wechat
 
 jobs:
   build-and-push-image:
@@ -47,7 +48,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ${{ env.IMAGE_NAME }}
+            ${{ env.DOCKERHUB_IMAGE_NAME }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
@@ -56,7 +57,7 @@ jobs:
           context: .
           push: true
           file: ./docker/Dockerfile.latest
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: 'v1.0.0'
           labels: ${{ steps.meta.outputs.labels }}
 
       - uses: actions/delete-package-versions@v4
